@@ -27,7 +27,7 @@ def sem_pair_converter(sem_pair_file):
 
 def create_mega_classroom_csv():
 
-    print('type the number of seminars to combine')
+    print('type the number of seminars to combine:')
     sem_count = int(input())
     print('checking if you have sufficient sem csvs in sem_pairs dir...')
     sem_dir = './data/sem_pairs/'
@@ -41,7 +41,7 @@ def create_mega_classroom_csv():
     
     print('sufficient sem csvs found!')
     
-    print('type a name for your tutor room')
+    print('type a name for your tutor room:')
     tutor_room_name = input()
     mega_classroom_list = [
         ['Pre-assign Room Name', 'Email Address'],
@@ -60,6 +60,17 @@ def create_mega_classroom_csv():
         if i < 10:
             mega_classroom_list.append([f'Room 10{i}', 'null@null.com'])
         else: mega_classroom_list.append([f'Room 1{i}', 'null@null.com'])
+    print('would you like any corner offices? input yes or no')
+    corner_office = input()
+    if corner_office == 'yes':
+        print('how many corner offices?')
+        corner_office_count = int(input())
+        print('please type the individuals that these are for, seperated by commas')
+        names = input()
+        names_list = names.split(', ')
+        for name in names_list:
+            mega_classroom_list.append([f'{name}\'s Corner Office', 'null@null.com'])
+
 
     with open(f'./output/mega_classroom.csv', 'a', encoding='utf-8') as c:
         writer_obj = csv.writer(c)
@@ -68,4 +79,8 @@ def create_mega_classroom_csv():
         print('creating output csv file...')
         print('done! please check the output directory for mega_classroom.csv')
 
-create_mega_classroom_csv()
+if os.path.exists("./output/mega_classroom.csv"):
+    os.remove("./output/mega_classroom.csv")
+    create_mega_classroom_csv()
+else:
+    create_mega_classroom_csv()
